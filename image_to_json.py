@@ -46,7 +46,7 @@ for image_file_name in image_file_names:
     thresh = cv2.adaptiveThreshold(median, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 15, 2)
     # cv2.imshow("thresh", thresh)
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     max_area = 0
     c = 0
@@ -81,7 +81,7 @@ for image_file_name in image_file_names:
     thresh = cv2.adaptiveThreshold(median, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 15, 2)
     # cv2.imshow("thresh1", thresh)
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # contours = sorted(contours, key=lambda ctr: cv2.boundingRect(ctr)[1] + cv2.boundingRect(ctr)[0] * image.shape[0])
     contours = sorted(contours, key=lambda ctr: (cv2.boundingRect(ctr)[0] ** 2 + cv2.boundingRect(ctr)[1] ** 2) ** 0.5 + cv2.boundingRect(ctr)[0] * width * 2)
@@ -117,13 +117,23 @@ for image_file_name in image_file_names:
                 cropped_image = thresh[topy+35:bottomy-34, topx+35:bottomx-34]
                 mat = get_matrix_of_image(cropped_image, c)
                 # cv2.imshow("Cropped Image " + str(c), cropped_image)
-                current_digit = {"digit": j, "pixels": mat}
+                current_digit = {"digit": digit_number, "pixels": mat}
                 dataset.append(current_digit)
             c+=1
 
 
 with open("dataset.json", "w") as f:
     json.dump(dataset, f)
+
+with open("dataset.csv", "w") as f:
+    for data in dataset:
+        s = str(data["digit"])
+        for i in range(len(data["pixels"])):
+            for j in range(len(data["pixels"][i])):
+                s += "," + str(data["pixels"][i][j])
+        f.write(s + "\n")
+
+f.close()
 
 # cv2.imshow("Final Image", image)
 # cv2.waitKey(0)
