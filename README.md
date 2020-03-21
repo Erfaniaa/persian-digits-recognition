@@ -19,8 +19,6 @@ Farsi (Arabic) Scanned Digits Recognition
   pip install -r requirements.txt
   ```
 
-  ​
-
 ## Usage
 
 - Converting scanned images to CSV and JSON datasets:
@@ -29,14 +27,11 @@ Farsi (Arabic) Scanned Digits Recognition
   python create_dataset_from_images.py
   ```
 
-
 - Using large datasets for training, validation and testing:
 
   ```bash
   python main.py
   ```
-
-  ​
 
 ## Notes
 
