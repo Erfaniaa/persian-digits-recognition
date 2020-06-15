@@ -1,5 +1,5 @@
 # Persian Digits Recognition
-Farsi (Arabic) Scanned Digits Recognition
+Identifying Farsi (Arabic) Scanned Handwritten Digits
 
 ## In this repository
 
